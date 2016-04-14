@@ -83,7 +83,7 @@ class Etsy extends Server
      */
     public function urlUserDetails()
     {
-        return self::API_URL.'users';
+        return self::API_URL.'users/__SELF__';
     }
 
     /**
@@ -91,14 +91,13 @@ class Etsy extends Server
      */
     public function userDetails($data, TokenCredentials $tokenCredentials)
     {
-        $data = $data['user'];
+        $data = $data['results'][0];
 
         $user = new User();
         $user->uid = $data['user_id'];
         $user->nickname = $data['login_name'];
-        $user->email = $data['primary_email'];
 
-        $used = array('user_id', 'login_name', 'primary_email');
+        $used = array('user_id', 'login_name');
 
         // Save all extra data
         $user->extra = array_diff_key($data, array_flip($used));
@@ -118,7 +117,7 @@ class Etsy extends Server
      */
     public function userEmail($data, TokenCredentials $tokenCredentials)
     {
-        return $data['user']['primary_email'];
+        return;
     }
 
     /**

@@ -1,5 +1,10 @@
 # Etsy Provider for OAuth 1.0 Client
 
+[![Latest Stable Version](https://img.shields.io/packagist/v/y0lk/oauth1-etsy.svg)](https://packagist.org/packages/y0lk/oauth1-etsy)
+[![Build Status](https://img.shields.io/travis/y0lk/oauth1-etsy.svg)](https://travis-ci.org/y0lk/oauth1-etsy)
+[![License](https://img.shields.io/packagist/l/y0lk/oauth1-etsy.svg)](https://github.com/y0lk/oauth1-etsy/blob/master/LICENSE)
+[![Total Downloads](https://img.shields.io/packagist/dt/y0lk/oauth1-etsy.svg?maxAge=2592000)](https://packagist.org/packages/y0lk/oauth1-etsy)
+
 This package provides Etsy API OAuth 1.0 support for the PHP League's [OAuth 1.0 Client](https://github.com/thephpleague/oauth1-client).
 
 ## Installation
