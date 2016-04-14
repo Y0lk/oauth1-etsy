@@ -15,7 +15,7 @@
     "client",
     "authorization",
     "authorisation",
-    "y0lk"
+    "etsy"
   ],
   "require": {
     "php": ">=5.3.0",

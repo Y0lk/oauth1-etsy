@@ -16,6 +16,12 @@ class Etsy extends Server
      */
     protected $applicationScope;
 
+    /**
+     * Login url for authorization provided by Etsy
+     * @var string
+     */
+    protected $login_url;
+
 
     /**
      * {@inheritDoc}
@@ -63,7 +69,7 @@ class Etsy extends Server
      */
     public function urlAuthorization()
     {
-        return self::API_URL.'oauth/authenticate';
+        return $this->login_url;
     }
     /**
      * {@inheritDoc}
@@ -79,6 +85,7 @@ class Etsy extends Server
     {
         return self::API_URL.'users';
     }
+
     /**
      * {@inheritDoc}
      */
@@ -97,6 +104,7 @@ class Etsy extends Server
         $user->extra = array_diff_key($data, array_flip($used));
         return $user;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -104,6 +112,7 @@ class Etsy extends Server
     {
         return $data['user']['user_id'];
     }
+
     /**
      * {@inheritDoc}
      */
@@ -111,6 +120,7 @@ class Etsy extends Server
     {
         return $data['user']['primary_email'];
     }
+
     /**
      * {@inheritDoc}
      */
@@ -134,5 +144,48 @@ class Etsy extends Server
                 $this->$property = $configuration[$config];
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTemporaryCredentials()
+    {
+        $uri = $this->urlTemporaryCredentials();
+
+        $client = $this->createHttpClient();
+
+        $header = $this->temporaryCredentialsProtocolHeader($uri);
+        $authorizationHeader = array('Authorization' => $header);
+        $headers = $this->buildHttpClientHeaders($authorizationHeader);
+
+        try {
+            $response = $client->post($uri, $headers)->send();
+        } catch (BadResponseException $e) {
+            return $this->handleTemporaryCredentialsBadResponse($e);
+        }
+
+        //Catch body and retrieve Etsy login_url
+        $body = $response->getBody();
+        parse_str($body, $data);
+
+        $this->login_url = $data['login_url'];
+
+        return $this->createTemporaryCredentials($response->getBody());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAuthorizationUrl($temporaryIdentifier)
+    {
+        // Somebody can pass through an instance of temporary
+        // credentials and we'll extract the identifier from there.
+        if ($temporaryIdentifier instanceof TemporaryCredentials) {
+            $temporaryIdentifier = $temporaryIdentifier->getIdentifier();
+        }
+
+        //Return the authorization url directly since it's provided by Etsy and contains all parameters
+        return $this->urlAuthorization();
     }
 }
