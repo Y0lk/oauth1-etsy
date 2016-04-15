@@ -14,13 +14,13 @@ class Etsy extends Server
      *
      * @var string
      */
-    protected $applicationScope;
+    protected $applicationScope = "";
 
     /**
      * Login url for authorization provided by Etsy
      * @var string
      */
-    protected $login_url;
+    protected $login_url = "";
 
 
     /**
