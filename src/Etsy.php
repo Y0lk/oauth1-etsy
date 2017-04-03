@@ -159,7 +159,9 @@ class Etsy extends Server
         $headers = $this->buildHttpClientHeaders($authorizationHeader);
 
         try {
-            $response = $client->post($uri, $headers)->send();
+            $response = $client->post($uri, [
+                'headers' => $headers
+            ]);
         } catch (BadResponseException $e) {
             return $this->handleTemporaryCredentialsBadResponse($e);
         }
