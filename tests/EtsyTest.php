@@ -2,8 +2,9 @@
 namespace Y0lk\OAuth1\Client\Test\Server;
 
 use Y0lk\OAuth1\Client\Server\Etsy;
+use PHPUnit\Framework\TestCase;
 
-class EtsyTest extends \PHPUnit_Framework_TestCase
+class EtsyTest extends TestCase
 {
     public function testImplementsInterfaceMethods()
     {

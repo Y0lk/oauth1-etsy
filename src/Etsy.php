@@ -178,7 +178,7 @@ class Etsy extends Server
     /**
      * {@inheritDoc}
      */
-    public function getAuthorizationUrl($temporaryIdentifier)
+    public function getAuthorizationUrl($temporaryIdentifier, array $options = [])
     {
         // Somebody can pass through an instance of temporary
         // credentials and we'll extract the identifier from there.
